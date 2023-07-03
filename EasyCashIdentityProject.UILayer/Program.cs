@@ -1,3 +1,6 @@
+using DataAccessLayer.Concrete;
+using EntityLayer.Concrete;
+
 namespace EasyCashIdentityProject.UILayer
 {
     public class Program
@@ -8,6 +11,8 @@ namespace EasyCashIdentityProject.UILayer
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<EasyCashIdentityContext>();
+            builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<EasyCashIdentityContext>();
 
             var app = builder.Build();
 
@@ -23,7 +28,7 @@ namespace EasyCashIdentityProject.UILayer
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
