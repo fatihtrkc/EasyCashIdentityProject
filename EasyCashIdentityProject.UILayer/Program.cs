@@ -1,4 +1,5 @@
 using DataAccessLayer.Concrete;
+using EasyCashIdentityProject.UILayer.Models;
 using EntityLayer.Concrete;
 
 namespace EasyCashIdentityProject.UILayer
@@ -12,7 +13,7 @@ namespace EasyCashIdentityProject.UILayer
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<EasyCashIdentityContext>();
-            builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<EasyCashIdentityContext>();
+            builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<EasyCashIdentityContext>().AddErrorDescriber<CustomIdentityValidator>();
 
             var app = builder.Build();
 
