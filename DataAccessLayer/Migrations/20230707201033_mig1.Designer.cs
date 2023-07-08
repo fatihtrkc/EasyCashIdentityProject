@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(EasyCashIdentityContext))]
-    [Migration("20230616225521_identitydbcontext_approle_appuser")]
-    partial class identitydbcontext_approle_appuser
+    [Migration("20230707201033_mig1")]
+    partial class mig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,11 +36,15 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2023, 7, 7, 23, 10, 33, 736, DateTimeKind.Local).AddTicks(9819));
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("ProcessType");
 
                     b.HasKey("Id");
 
@@ -95,6 +99,9 @@ namespace DataAccessLayer.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ConfirmCode")
+                        .HasColumnType("int");
 
                     b.Property<string>("County")
                         .IsRequired()
@@ -187,9 +194,15 @@ namespace DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreationDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2023, 7, 7, 23, 10, 33, 737, DateTimeKind.Local).AddTicks(401));
+
                     b.Property<string>("Currency")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 

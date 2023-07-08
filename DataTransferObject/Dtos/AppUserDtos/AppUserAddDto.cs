@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataTransferObjectLayer.Dtos.AppUserDtos
 {
-    public class AppUserSignUpDto
+    public class AppUserAddDto
     {
         //[Required(ErrorMessage ="This field is required.")]
         //[Display(Name ="Name :  ")]

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccessLayer.Migrations
 {
-    public partial class identitydbcontext_approle_appuser : Migration
+    public partial class mig1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,9 +15,9 @@ namespace DataAccessLayer.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProcessType = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 7, 7, 23, 10, 33, 736, DateTimeKind.Local).AddTicks(9819))
                 },
                 constraints: table =>
                 {
@@ -50,6 +50,7 @@ namespace DataAccessLayer.Migrations
                     County = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ConfirmCode = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -183,9 +184,10 @@ namespace DataAccessLayer.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AccountNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Currency = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     BankBranch = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 7, 7, 23, 10, 33, 737, DateTimeKind.Local).AddTicks(401)),
                     AppUserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

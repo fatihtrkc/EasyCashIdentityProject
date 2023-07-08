@@ -1,16 +1,18 @@
 ﻿using DataTransferObjectLayer.Dtos.AppUserDtos;
 using EntityLayer.Concrete;
+using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
 
 namespace EasyCashIdentityProject.UILayer.Controllers
 {
     public class SignUpController : Controller
     {
-        private readonly UserManager<AppUser> _userManager;
+        private readonly UserManager<AppUser> userManager;
         public SignUpController(UserManager<AppUser> userManager)
         {
-            _userManager = userManager;
+            this.userManager = userManager;
         }
 
         public IActionResult Index()
@@ -19,25 +21,47 @@ namespace EasyCashIdentityProject.UILayer.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(AppUserSignUpDto appUserSignUpDto)
+        public async Task<IActionResult> Index(AppUserAddDto appUserAddDto)
         {
             if (ModelState.IsValid)
             {
+                Random random = new();
+                int confirmCode = random.Next(100_000, 1_000_000);
+
                 AppUser appUser = new AppUser()
                 {
-                    UserName = appUserSignUpDto.UserName,
-                    Name = appUserSignUpDto.Name,
-                    Surname = appUserSignUpDto.Surname,
-                    Email = appUserSignUpDto.Email
+                    UserName = appUserAddDto.UserName,
+                    Name = appUserAddDto.Name,
+                    Surname = appUserAddDto.Surname,
+                    Email = appUserAddDto.Email,
+                    ConfirmCode = confirmCode
                 };
 
-                var result = await _userManager.CreateAsync(appUser, appUserSignUpDto.Password);
+                var result = await userManager.CreateAsync(appUser, appUserAddDto.Password);
 
-                if (result.Succeeded) 
+                if (result.Succeeded)
                 {
+                    MimeMessage mimeMessage = new();
+                    MailboxAddress mailboxAddressFrom = new MailboxAddress("Easy Cash Identity", "");
+                    MailboxAddress mailboxAddressTo = new MailboxAddress("User", appUser.Email);
+
+                    mimeMessage.From.Add(mailboxAddressFrom);
+                    mimeMessage.To.Add(mailboxAddressTo);
+
+                    var bodyBuilder = new BodyBuilder();
+                    bodyBuilder.TextBody = "Easy Cash Identity Sign Up process confirm code :  " + confirmCode;
+                    mimeMessage.Body = bodyBuilder.ToMessageBody();
+                    mimeMessage.Subject = "Easy Cash Identity Sign Up Confirm Code";
+
+                    SmtpClient client = new();
+                    client.Connect("", 587, false);
+                    client.Authenticate("", "");
+                    client.Send(mimeMessage);
+                    client.Disconnect(true);
+
                     return RedirectToAction("Index", "EmailConfirm");
                 }
-                else 
+                else
                 {
                     foreach (var item in result.Errors)
                     {
@@ -49,9 +73,3 @@ namespace EasyCashIdentityProject.UILayer.Controllers
         }
     }
 }
-
-// pasword 6 karakter
-// 1 küçük harf
-// 1 büyük harf
-// 1 sembol
-// 1 sayı

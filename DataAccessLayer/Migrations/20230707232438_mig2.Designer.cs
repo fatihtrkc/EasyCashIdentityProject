@@ -4,6 +4,7 @@ using DataAccessLayer.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(EasyCashIdentityContext))]
-    partial class EasyCashIdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20230707232438_mig2")]
+    partial class mig2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +38,7 @@ namespace DataAccessLayer.Migrations
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 7, 8, 2, 26, 39, 9, DateTimeKind.Local).AddTicks(9117));
+                        .HasDefaultValue(new DateTime(2023, 7, 8, 2, 24, 38, 778, DateTimeKind.Local).AddTicks(1080));
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -97,7 +99,7 @@ namespace DataAccessLayer.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ConfirmCode")
+                    b.Property<int>("ConfirmCode")
                         .HasColumnType("int");
 
                     b.Property<string>("County")
@@ -192,7 +194,7 @@ namespace DataAccessLayer.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 7, 8, 2, 26, 39, 9, DateTimeKind.Local).AddTicks(9609));
+                        .HasDefaultValue(new DateTime(2023, 7, 8, 2, 24, 38, 778, DateTimeKind.Local).AddTicks(1643));
 
                     b.Property<string>("Currency")
                         .IsRequired()

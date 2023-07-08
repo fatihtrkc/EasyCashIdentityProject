@@ -8,6 +8,11 @@ namespace EntityLayer.Concrete
 {
     public class AccountProcess
     {
+        public AccountProcess()
+        {
+            Date = DateTime.Now;
+        }
+
         public int Id { get; set; }
         public string Type { get; set; }
         public decimal Amount { get; set; }

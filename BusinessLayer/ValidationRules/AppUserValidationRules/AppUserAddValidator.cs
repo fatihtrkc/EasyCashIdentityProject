@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.ValidationRules.AppUserValidationRules
 {
-    public class AppUserAddValidator : AbstractValidator<AppUserSignUpDto>
+    public class AppUserAddValidator : AbstractValidator<AppUserAddDto>
     {
         public AppUserAddValidator()
         {
